@@ -30,4 +30,7 @@ public enum TokenType {
 
     PERIOD, // .
     COMMA, // ,
+    SEMICOLON, // ;
+
+    RULE_ASSIGNMENT, // :-
 }

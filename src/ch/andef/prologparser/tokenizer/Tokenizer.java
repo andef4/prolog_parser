@@ -31,10 +31,15 @@ public class Tokenizer {
                 tokens.add(new Token(TokenType.RBRACKET));
             } else if (getCurrentChar().matches("\\.")) {
                 tokens.add(new Token(TokenType.PERIOD));
-            } else if (getCurrentChar().matches("\\,")) {
+            } else if (getCurrentChar().matches(",")) {
                 tokens.add(new Token(TokenType.COMMA));
+            } else if (getCurrentChar().matches(";")) {
+                tokens.add(new Token(TokenType.SEMICOLON));
             } else if (getCurrentChar().matches("%")) {
                 parseComment();
+            } else if (getCurrentChar().equals(":") && getNextChar().equals("-")) {
+                tokens.add(new Token(TokenType.RULE_ASSIGNMENT));
+                nextChar();
             } else {
                 throw new RuntimeException(String.format("parse error on position %s '%s'", position,
                         program.substring(position - 1, position + 1)));

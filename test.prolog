@@ -1,5 +1,4 @@
 cat(tom).
-parent(Fritz, 1234).
 
 
 % listen
