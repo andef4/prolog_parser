@@ -2,6 +2,8 @@ package ch.andef.prologparser;
 
 import java.util.List;
 
+import ch.andef.prologparser.parser.Parser;
+import ch.andef.prologparser.parser.datastructures.Fact;
 import ch.andef.prologparser.tokenizer.Token;
 import ch.andef.prologparser.tokenizer.Tokenizer;
 
@@ -13,10 +15,13 @@ public class Main {
                 "listTest(a, [b,c,d]).\n";
         System.out.println(input);
         Tokenizer tokenizer = new Tokenizer();
-        List<Token> tokenize = tokenizer.tokenize(input);
+        List<Token> tokens = tokenizer.tokenize(input);
 
-        for (Token token : tokenize) {
-            System.out.println(token);
+        Parser parser = new Parser();
+        List<Fact> terms = parser.parse(tokens);
+
+        for (Fact term : terms) {
+            System.out.println(term);
         }
     }
 }
