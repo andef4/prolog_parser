@@ -33,6 +33,8 @@ public class Tokenizer {
                 tokens.add(new Token(TokenType.PERIOD));
             } else if (getCurrentChar().matches("\\,")) {
                 tokens.add(new Token(TokenType.COMMA));
+            } else if (getCurrentChar().matches("%")) {
+                parseComment();
             } else {
                 throw new RuntimeException(String.format("parse error on position %s '%s'", position,
                         program.substring(position - 1, position + 1)));
@@ -85,6 +87,13 @@ public class Tokenizer {
         }
         tokens.add(new Token(TokenType.IDENTIFIER, buffer.toString()));
         return;
+    }
+
+    private void parseComment() {
+        nextChar();
+        while (!isEndOfProgram() && !getCurrentChar().equals("\n")) {
+            nextChar();
+        }
     }
 
     private void nextChar() {
