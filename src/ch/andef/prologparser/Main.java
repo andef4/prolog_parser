@@ -8,8 +8,9 @@ import ch.andef.prologparser.tokenizer.Tokenizer;
 public class Main {
 
     public static void main(String[] args) {
-        String input = "cat(tom).\n" +
-                "    parent(Fritz, 1234).\n" +
+        String input = "cat(tom).%  whatever \n" +
+                "    parent(Fritz, 1234). %% comment\n" +
+                "% commment 2 abc(tom).\n" +
                 "listTest(a, [b,c,d]).\n";
         System.out.println(input);
         Tokenizer tokenizer = new Tokenizer();
