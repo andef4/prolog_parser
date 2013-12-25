@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Tokenizer {
+    private String program = null;
     private List<Token> tokens = null;
     private int position = 0;
-    private String program = null;
 
     public List<Token> tokenize(String program) {
         this.program = program;
-        tokens = new ArrayList<Token>();
-        position = 0;
+        this.tokens = new ArrayList<Token>();
+        this.position = 0;
 
         while (!isEndOfProgram()) {
             if (getCurrentChar().matches("[\t\n ]+")) {
