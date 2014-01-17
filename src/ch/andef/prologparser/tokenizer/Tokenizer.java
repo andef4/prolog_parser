@@ -21,28 +21,37 @@ public class Tokenizer {
                 parseNumber();
             } else if (getCurrentChar().matches("[A-Z]+")) {
                 parseVariable();
-            } else if (getCurrentChar().matches("\\(")) {
+            } else if (getCurrentChar().equals("_")) {
+                tokens.add(new Token(TokenType.VARIABLE, "_"));
+            } else if (getCurrentChar().equals("(")) {
                 tokens.add(new Token(TokenType.LPAREN));
-            } else if (getCurrentChar().matches("\\)")) {
+            } else if (getCurrentChar().equals(")")) {
                 tokens.add(new Token(TokenType.RPAREN));
-            } else if (getCurrentChar().matches("\\[")) {
+            } else if (getCurrentChar().equals("[")) {
                 tokens.add(new Token(TokenType.LBRACKET));
-            } else if (getCurrentChar().matches("\\]")) {
+            } else if (getCurrentChar().equals("]")) {
                 tokens.add(new Token(TokenType.RBRACKET));
-            } else if (getCurrentChar().matches("\\.")) {
+            } else if (getCurrentChar().equals(".")) {
                 tokens.add(new Token(TokenType.PERIOD));
-            } else if (getCurrentChar().matches(",")) {
+            } else if (getCurrentChar().equals(",")) {
                 tokens.add(new Token(TokenType.COMMA));
-            } else if (getCurrentChar().matches(";")) {
+            } else if (getCurrentChar().equals(";")) {
                 tokens.add(new Token(TokenType.SEMICOLON));
-            } else if (getCurrentChar().matches("%")) {
+            } else if (getCurrentChar().equals("|")) {
+                tokens.add(new Token(TokenType.PIPE));
+            } else if (getCurrentChar().equals("!")) {
+                tokens.add(new Token(TokenType.EXCLAMATION_MARK));
+            } else if (getCurrentChar().equals("%")) {
                 parseComment();
+            } else if (getCurrentChar().equals("/") && getNextChar().equals("*")) {
+                nextChar();
+                nextChar();
+                parseCComment();
             } else if (getCurrentChar().equals(":") && getNextChar().equals("-")) {
                 tokens.add(new Token(TokenType.RULE_ASSIGNMENT));
                 nextChar();
             } else {
-                throw new RuntimeException(String.format("parse error on position %s '%s'", position,
-                        program.substring(position - 1, position + 1)));
+                throwParseError();
             }
             nextChar();
         }
@@ -99,6 +108,23 @@ public class Tokenizer {
         while (!isEndOfProgram() && !getCurrentChar().equals("\n")) {
             nextChar();
         }
+    }
+
+    private void parseCComment() {
+        while (!getCurrentChar().equals("*")) {
+            nextChar();
+            if (isEndOfProgram()) {
+                throwParseError();
+            }
+            if (getNextChar().equals("/")) {
+                return;
+            }
+        }
+    }
+
+    private void throwParseError() {
+        throw new RuntimeException(String.format("parse error on position %s '%s'", position,
+                program.substring(position - 1, position + 1)));
     }
 
     private void nextChar() {
