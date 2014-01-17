@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ch.andef.prologparser.parser.datastructures.Argument;
+import ch.andef.prologparser.parser.datastructures.Atom;
 import ch.andef.prologparser.parser.datastructures.Fact;
+import ch.andef.prologparser.parser.datastructures.PrologNumber;
 import ch.andef.prologparser.parser.datastructures.Rule;
 import ch.andef.prologparser.parser.datastructures.Rule.OrGoals;
+import ch.andef.prologparser.parser.datastructures.Variable;
 import ch.andef.prologparser.tokenizer.Token;
 import ch.andef.prologparser.tokenizer.TokenType;
 
@@ -20,18 +23,20 @@ public class Parser {
         this.facts = new ArrayList<Fact>();
         this.position = 0;
 
-        while (position <= facts.size()) {
+        while (true) {
             facts.add(parseFact());
+            if (position + 1 == tokens.size()) {
+                break;
+            }
+            nextToken();
         }
-
         return facts;
-
     }
 
     private Fact parseFact() {
         Fact fact = null;
         expect(TokenType.IDENTIFIER);
-        String functor = getData();
+        String functor = getLastToken().getData();
         expect(TokenType.LPAREN);
 
         List<Argument> arguments = parseArgumentList();
@@ -43,7 +48,11 @@ public class Parser {
         } else {
             fact = new Fact();
         }
-        expect(TokenType.PERIOD);
+
+        if (getCurrentToken().getType() != TokenType.PERIOD) {
+            // TODO exception
+            throw new RuntimeException("bad fact/rule");
+        }
         fact.setFunctor(functor);
         fact.setArguments(arguments);
         return fact;
@@ -56,13 +65,31 @@ public class Parser {
     }
 
     private List<Argument> parseArgumentList() {
-        // TODO Auto-generated method stub
-        return null;
+        List<Argument> arguments = new ArrayList<Argument>();
+        while (true) {
+            if (accept(TokenType.IDENTIFIER)) {
+                // TODO parse recursive facts
+                arguments.add(new Atom(getLastToken().getData()));
+            } else if (accept(TokenType.VARIABLE)) {
+                arguments.add(new Variable(getLastToken().getData()));
+            } else if (accept(TokenType.NUMBER)) {
+                arguments.add(new PrologNumber(Integer.parseInt(getLastToken().getData())));
+            } else if (accept(TokenType.LBRACKET)) {
+                //TODO: parseList();
+            }
+
+            if (getCurrentToken().getType() == TokenType.RPAREN) {
+                break;
+            } else if (!accept(TokenType.COMMA)){
+                throw new RuntimeException("Error parsing arguments");
+            }
+        }
+        return arguments;
     }
 
     private boolean accept(TokenType type) {
-        if (tokens.get(position).getType() == type) {
-            position++;
+        if (getCurrentToken().getType() == type) {
+            nextToken();
             return true;
         }
         return false;
@@ -74,8 +101,19 @@ public class Parser {
         }
     }
 
-    private String getData() {
-        return tokens.get(position).getData();
+    public void nextToken() {
+        position++;
+        if (position >= tokens.size()) {
+            throw new RuntimeException("Unexpected end of proram.");
+        }
+    }
+
+    public Token getCurrentToken() {
+        return tokens.get(position);
+    }
+
+    public Token getLastToken() {
+        return tokens.get(position - 1);
     }
 
 
