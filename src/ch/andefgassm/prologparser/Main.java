@@ -1,13 +1,17 @@
-package ch.andef.prologparser;
+package ch.andefgassm.prologparser;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 
-import ch.andef.prologparser.tokenizer.Token;
-import ch.andef.prologparser.tokenizer.Tokenizer;
+import ch.andefgassm.prologparser.tokenizer.Token;
+import ch.andefgassm.prologparser.tokenizer.Tokenizer;
 
+/**
+ * The Main class calls the tokenizer with the prolog program passed by command line argument
+ * @author andef4, gassm9
+ */
 public class Main {
 
     public static void main(String[] args) throws IOException {

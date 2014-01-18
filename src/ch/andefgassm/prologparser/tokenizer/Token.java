@@ -1,5 +1,9 @@
-package ch.andef.prologparser.tokenizer;
+package ch.andefgassm.prologparser.tokenizer;
 
+/**
+ * A prolog Token. Every Token has a type and some have additional data (like string context, identifier name).
+ * @author andef4, gassm9
+ */
 public class Token {
 
     private TokenType type = null;

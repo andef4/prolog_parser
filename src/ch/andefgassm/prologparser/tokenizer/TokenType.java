@@ -1,4 +1,4 @@
-package ch.andef.prologparser.tokenizer;
+package ch.andefgassm.prologparser.tokenizer;
 
 public enum TokenType {
 

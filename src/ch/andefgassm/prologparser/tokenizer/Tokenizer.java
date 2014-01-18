@@ -1,11 +1,11 @@
-package ch.andef.prologparser.tokenizer;
+package ch.andefgassm.prologparser.tokenizer;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * A tokenizer for a subset of prolog
- * @author andef4 gassm9
+ * @author andef4, gassm9
  */
 public class Tokenizer {
     private String program = null;
@@ -103,7 +103,7 @@ public class Tokenizer {
         StringBuffer buffer = new StringBuffer();
         buffer.append(getCurrentChar());
         while (!isEndOfProgram()) {
-            if (getNextChar().matches("[a-zA-Z0-9]+")) {
+            if (getNextChar().matches("[a-zA-Z0-9_]+")) {
                 nextChar();
                 buffer.append(getCurrentChar());
             } else {
@@ -121,7 +121,7 @@ public class Tokenizer {
         StringBuffer buffer = new StringBuffer();
         buffer.append(getCurrentChar());
         while (!isEndOfProgram()) {
-            if (getNextChar().matches("[a-zA-Z0-9]+")) {
+            if (getNextChar().matches("[a-zA-Z0-9_]+")) {
                 nextChar();
                 buffer.append(getCurrentChar());
             } else {
