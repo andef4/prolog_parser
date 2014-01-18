@@ -3,24 +3,22 @@ package ch.andef.prologparser.tokenizer;
 public enum TokenType {
 
     /*
-     * Beispielsweise sind likes, mary, book, wine Atome. Das erste Zeichen
-     * eines solchen Atoms ist ein kleingeschriebener Buchstabe und die
-     * folgenden Zeichen sind entweder Buchstaben oder Ziffern. Es gibt aber
-     * auch Atome, die lediglich aus Symbolen bestehen, wie beispielsweise ‚:-‘.
-     * Diese bestehen nur aus solchen Sonderzeichen.
+     * a prolog identifier. Starts with a lower case letter and goes on with
+     * letters and numbers
      */
     IDENTIFIER,
 
-    /* ganze zahlen */
+    // prolog integers
     NUMBER,
 
     /*
-     * Variablen sind wie die erste Gruppe von Atomen aufgebaut, aber fangen mit
-     * einem grossen Buchstaben an. Beispiele sind X, Y und Z. Manchmal braucht
-     * man eine Variable, deren Namen nicht benötigt wird, das ist die
-     * sogenannte anonyme Variable ,_‘.
+     * A prolog variable. Starts with a upper case letter and goes on with
+     * letters and numbers
      */
     VARIABLE,
+
+    // A string contains any characters and is enclosed in '
+    STRING,
 
     LPAREN, // (
     RPAREN, // )
