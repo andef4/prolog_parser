@@ -32,9 +32,128 @@ public class Main {
         Tokenizer tokenizer = new Tokenizer();
         List<Token> tokens = tokenizer.tokenize(buffer.toString());
 
-        // TODO gassm9: pretty print the tokens
+        // pretty print the tokens
         for (Token token : tokens) {
-            System.out.println(token);
+
+            switch (token.getType()){
+            case IDENTIFIER:
+                if(token.getData() != null){
+                    System.out.println(token.getData());
+                }
+                else{
+                    System.out.println(token);
+                }
+                break;
+            case NUMBER:
+                if(token.getData() != null){
+                    System.out.println(token.getData());
+                }
+                else{
+                    System.out.println(token);
+                }
+                break;
+            case VARIABLE:
+                if(token.getData() != null){
+                    System.out.println(token.getData());
+                }
+                else{
+                    System.out.println(token);
+                }
+                break;
+            case STRING:
+                if(token.getData() != null){
+                    System.out.println(token.getData());
+                }
+                else{
+                    System.out.println(token);
+                }
+                break;
+            case LPAREN:
+                if(token.getData() != null){
+                    System.out.println(token.getData());
+                }
+                else{
+                    System.out.println("(");
+                }
+                break;
+            case RPAREN:
+                if(token.getData() != null){
+                    System.out.println(token.getData());
+                }
+                else{
+                    System.out.println(")");
+                }
+                break;
+            case LBRACKET:
+                if(token.getData() != null){
+                    System.out.println(token.getData());
+                }
+                else{
+                    System.out.println("[");
+                }
+                break;
+            case RBRACKET:
+                if(token.getData() != null){
+                    System.out.println(token.getData());
+                }
+                else{
+                    System.out.println("]");
+                }
+                break;
+            case PERIOD:
+                if(token.getData() != null){
+                    System.out.println(token.getData());
+                }
+                else{
+                    System.out.println(".");
+                }
+                break;
+            case COMMA:
+                if(token.getData() != null){
+                    System.out.println(token.getData());
+                }
+                else{
+                    System.out.println(",");
+                }
+                break;
+            case SEMICOLON:
+                if(token.getData() != null){
+                    System.out.println(token.getData());
+                }
+                else{
+                    System.out.println(";");
+                }
+                break;
+            case PIPE:
+                if(token.getData() != null){
+                    System.out.println(token.getData());
+                }
+                else{
+                    System.out.println("|");
+                }
+                break;
+            case EXCLAMATION_MARK:
+                if(token.getData() != null){
+                    System.out.println(token.getData());
+                }
+                else{
+                    System.out.println("!");
+                }
+                break;
+            case RULE_ASSIGNMENT:
+                if(token.getData() != null){
+                    System.out.println(token.getData());
+                }
+                else{
+                    System.out.println(":-");
+                }
+                break;
+            default:
+                System.out.println(token);
+                break;
+            }
         }
+
     }
 }
+
